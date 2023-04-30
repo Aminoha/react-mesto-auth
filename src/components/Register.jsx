@@ -1,16 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Register = (props) => {
+const Register = ({
+  title,
+  onRegister,
+  handleChange,
+  formValue,
+  buttonText,
+}) => {
   return (
     <div className="authorization">
-      <h1>{props.title}</h1>
-      <form className="authorization-form">
+      <h1>{title}</h1>
+      <form className="authorization-form" onSubmit={onRegister}>
         <input
           className="authorization-form__input"
           name="email"
-          value={props.formValue.email}
-          onChange={props.handleChange}
+          value={formValue.email}
+          onChange={handleChange}
           placeholder="E-mail"
           type="email"
           required
@@ -18,8 +24,8 @@ const Register = (props) => {
         <input
           name="password"
           className="authorization-form__input"
-          value={props.formValue.password}
-          onChange={props.handleChange}
+          value={formValue.password}
+          onChange={handleChange}
           placeholder="Пароль"
           type="password"
           required
@@ -28,9 +34,8 @@ const Register = (props) => {
           className="authorization-form__button"
           type="submit"
           name="save"
-          onClick={props.onRegister}
         >
-          {props.buttonText}
+          {buttonText}
         </button>
         <Link className="authorization__link" to="/sign-in">
           Уже зарегистрированы? Войти

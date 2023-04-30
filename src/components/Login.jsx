@@ -1,15 +1,15 @@
 import React from "react";
 
-const Login = (props) => {
+const Login = ({ title, formValue, handleChange, onLogin, buttonText }) => {
   return (
     <div className="authorization">
-      <h1>{props.title}</h1>
-      <form className="authorization-form">
+      <h1>{title}</h1>
+      <form className="authorization-form" onSubmit={onLogin}>
         <input
           className="authorization-form__input"
           name="email"
-          value={props.formValue.email}
-          onChange={props.handleChange}
+          value={formValue.email}
+          onChange={handleChange}
           placeholder="E-mail"
           type="email"
           required
@@ -17,8 +17,8 @@ const Login = (props) => {
         <input
           name="password"
           className="authorization-form__input"
-          value={props.formValue.password}
-          onChange={props.handleChange}
+          value={formValue.password}
+          onChange={handleChange}
           placeholder="Пароль"
           type="password"
           required
@@ -27,9 +27,8 @@ const Login = (props) => {
           className="authorization-form__button"
           type="submit"
           name="save"
-          onClick={props.onLogin}
         >
-          {props.buttonText}
+          {buttonText}
         </button>
       </form>
     </div>

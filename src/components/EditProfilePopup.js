@@ -2,7 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
-function EditFrofilePopup(props) {
+const EditFrofilePopup = ({ isOpen, onUpdateUser, onClose }) => {
   const currentUser = useContext(CurrentUserContext);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -10,30 +10,30 @@ function EditFrofilePopup(props) {
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about);
-  }, [currentUser, props.isOpen]);
+  }, [currentUser, isOpen]);
 
-  function handleSumbit(evt) {
+  const handleSumbit = (evt) => {
     evt.preventDefault();
-    props.onUpdateUser({
+    onUpdateUser({
       name,
       about: description,
     });
-  }
+  };
 
-  function hadleChangeName(evt) {
+  const hadleChangeName = (evt) => {
     setName(evt.target.value);
-  }
+  };
 
-  function hadleChangeAbout(evt) {
+  const hadleChangeAbout = (evt) => {
     setDescription(evt.target.value);
-  }
+  };
 
   return (
     <PopupWithForm
       name="edit-profle"
       title="Редактировать профиль"
-      isOpen={props.isOpen}
-      onClose={props.onClose}
+      isOpen={isOpen}
+      onClose={onClose}
       buttonText="Сохранить"
       onSubmit={handleSumbit}
     >
@@ -68,6 +68,6 @@ function EditFrofilePopup(props) {
       />
     </PopupWithForm>
   );
-}
+};
 
 export default EditFrofilePopup;

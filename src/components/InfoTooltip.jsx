@@ -1,25 +1,28 @@
 import React from "react";
 import ok from "../images/ok-auth.svg";
 import error from "../images/decline-auth.svg";
+import usePopupClose from "../hooks/usePopupClose";
 
-const InfoTooltip = (props) => {
+const InfoTooltip = ({isOpen, onClose, isRegister, alt }) => {
+  usePopupClose(isOpen, onClose);
+
   return (
     <div
-      className={`popup popup__auth-res ${props.isOpen ? "popup_opened" : ""}`}
+      className={`popup popup__auth-res ${isOpen ? "popup_opened" : ""}`}
     >
       <div className="popup__container">
         <button
           className="popup__button-close"
           type="button"
-          onClick={props.onClose}
+          onClick={onClose}
         />
         <img
           className="popup__auth-image"
-          src={props.isRegister.status ? ok : error}
-          alt={props.alt}
+          src={isRegister.status ? ok : error}
+          alt={alt}
         />
         <h3 className="popup__title popup__title_auth">
-          {props.isRegister.message}
+          {isRegister.message}
         </h3>
       </div>
     </div>

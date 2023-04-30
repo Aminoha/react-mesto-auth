@@ -1,26 +1,26 @@
 import { useRef, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function EditAvatarPopup(props) {
+const EditAvatarPopup = ({ onUpdateAvatar, isOpen, onClose }) => {
   const refInput = useRef(null);
 
-  function handleSumbit(event) {
+  const handleSumbit = (event) => {
     event.preventDefault();
-    props.onUpdateAvatar({
+    onUpdateAvatar({
       avatar: refInput.current.value,
     });
-  }
+  };
 
   useEffect(() => {
     refInput.current.value = "";
-  }, [props.isOpen]);
+  }, [isOpen]);
 
   return (
     <PopupWithForm
       name="update-avatar"
       title="Обновить аватар"
-      isOpen={props.isOpen}
-      onClose={props.onClose}
+      isOpen={isOpen}
+      onClose={onClose}
       buttonText="Сохранить"
       onSubmit={handleSumbit}
     >
@@ -36,6 +36,6 @@ function EditAvatarPopup(props) {
       <span id="avatar-input-error" className="popup__input-error" />
     </PopupWithForm>
   );
-}
+};
 
 export default EditAvatarPopup;

@@ -1,20 +1,20 @@
 import { useContext } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
-function Card({ card, onCardClick, onCardLike, onCardDelete }) {
+const Card = ({ card, onCardClick, onCardLike, onCardDelete }) => {
   const currentUser = useContext(CurrentUserContext);
 
-  function handleClick() {
+  const handleClick = () => {
     onCardClick(card);
-  }
+  };
 
-  function handleLikeClick() {
+  const handleLikeClick = () => {
     onCardLike(card);
-  }
+  };
 
-  function handleDeleteClick() {
+  const handleDeleteClick = () => {
     onCardDelete(card);
-  }
+  };
 
   const isOwn = card.owner._id === currentUser._id;
   const cardDeleteButtonVisabilityAttribute = {
@@ -60,6 +60,6 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
       </article>
     </li>
   );
-}
+};
 
 export default Card;

@@ -1,6 +1,10 @@
-function ImagePopup({ card, onClose }) {
+import usePopupClose from "../hooks/usePopupClose";
+
+function ImagePopup({ card, onClose, isOpen }) {
+  usePopupClose(isOpen, onClose);
+
   return (
-    <div className={`popup popup_open-pic ${card.name ? "popup_opened" : ""}`}>
+    <div className={`popup popup_open-pic ${isOpen ? "popup_opened" : ""}`}>
       <figure className="popup__figure">
         <button
           className="popup__button-close"

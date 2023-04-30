@@ -2,7 +2,7 @@ import { useContext } from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 import Card from "./Card";
 
-function Main({
+const Main = ({
   onEditAvatar,
   onEditProfile,
   onAddPlace,
@@ -10,7 +10,7 @@ function Main({
   cards,
   onCardLike,
   onCardDelete,
-}) {
+}) => {
   const currentUser = useContext(CurrentUserContext);
 
   return (
@@ -55,6 +55,6 @@ function Main({
       </section>
     </main>
   );
-}
+};
 
 export default Main;

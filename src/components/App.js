@@ -14,12 +14,13 @@ import Login from "./Login";
 import Register from "./Register";
 import ProtectedRoute from "./ProtectedRoute";
 import InfoTooltip from "./InfoTooltip";
-import { getContent, authorize, register } from "../auth";
+import { getContent, authorize, register } from "../utils/auth";
 
-function App() {
+const App = () => {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [isOpenInfoTooltip, setIsOpenInfoTooltip] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({});
@@ -96,11 +97,15 @@ function App() {
   const tokenCheck = () => {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
-      getContent(jwt).then((res) => {
-        setIsLoggedIn(true);
-        setEmail(res.data.email);
-        navigate("/", { replace: true });
-      });
+      getContent(jwt)
+        .then((res) => {
+          setIsLoggedIn(true);
+          setEmail(res.data.email);
+          navigate("/", { replace: true });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
@@ -117,31 +122,32 @@ function App() {
     }
   }, [isLoggedIn]);
 
-  function handleEditProfileClick() {
+  const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
-  }
+  };
 
-  function handleAddPlaceClick() {
+  const handleAddPlaceClick = () => {
     setIsAddPlacePopupOpen(true);
-  }
+  };
 
-  function handleEditAvatarClick() {
+  const handleEditAvatarClick = () => {
     setIsEditAvatarPopupOpen(true);
-  }
+  };
 
-  function handleCardClick(card) {
+  const handleCardClick = (card) => {
     setSelectedCard(card);
-  }
+    setIsImagePopupOpen(true);
+  };
 
-  function closeAllPopups() {
+  const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
+    setIsImagePopupOpen(false);
     setIsOpenInfoTooltip(false);
-    setSelectedCard({});
-  }
+  };
 
-  function handleUpdateUser(items) {
+  const handleUpdateUser = (items) => {
     api
       .setUserInfo(items)
       .then((user) => {
@@ -151,9 +157,9 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
-  function handleUpdateAvatar(item) {
+  const handleUpdateAvatar = (item) => {
     api
       .setUserAvatar(item)
       .then((user) => {
@@ -163,9 +169,9 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
-  function handleCardLike(card) {
+  const handleCardLike = (card) => {
     const isLiked = card.likes.some((like) => like._id === currentUser._id);
     if (!isLiked) {
       api
@@ -193,9 +199,9 @@ function App() {
           console.log(err);
         });
     }
-  }
+  };
 
-  function handleCardDelete(card) {
+  const handleCardDelete = (card) => {
     api
       .deleteCard(card._id)
       .then(() => {
@@ -204,9 +210,9 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
-  function handleAddPlaceSubmit(items) {
+  const handleAddPlaceSubmit = (items) => {
     api
       .addCard(items)
       .then((newCard) => {
@@ -216,7 +222,7 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -297,10 +303,14 @@ function App() {
           onAddPlace={handleAddPlaceSubmit}
         />
         <PopupWithForm name="delete" title="Вы уверены?" buttonText="Да" />
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+        <ImagePopup
+          card={selectedCard}
+          onClose={closeAllPopups}
+          isOpen={isImagePopupOpen}
+        />
       </div>
     </CurrentUserContext.Provider>
   );
-}
+};
 
 export default App;

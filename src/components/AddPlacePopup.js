@@ -1,37 +1,37 @@
 import { useState, useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function AddPlacePopup(props) {
+const AddPlacePopup = ({ onAddPlace, isOpen, onClose }) => {
   const [name, setName] = useState("");
   const [link, setLink] = useState("");
-
-  function handleSumbit(evt) {
-    evt.preventDefault();
-    props.onAddPlace({
-      name,
-      link,
-    });
-  }
 
   useEffect(() => {
     setName("");
     setLink("");
-  }, [props.isOpen]);
+  }, [isOpen]);
 
-  function hadleChangeName(evt) {
+  const handleSumbit = (evt) => {
+    evt.preventDefault();
+    onAddPlace({
+      name,
+      link,
+    });
+  };
+
+  const hadleChangeName = (evt) => {
     setName(evt.target.value);
-  }
+  };
 
-  function hadleChangeLink(evt) {
+  const hadleChangeLink = (evt) => {
     setLink(evt.target.value);
-  }
+  };
 
   return (
     <PopupWithForm
       name="add-card"
       title="Новое место"
-      isOpen={props.isOpen}
-      onClose={props.onClose}
+      isOpen={isOpen}
+      onClose={onClose}
       buttonText="Создать"
       onSubmit={handleSumbit}
     >
@@ -61,6 +61,6 @@ function AddPlacePopup(props) {
       <span id="url-input-error" className="popup__input-error" />
     </PopupWithForm>
   );
-}
+};
 
 export default AddPlacePopup;

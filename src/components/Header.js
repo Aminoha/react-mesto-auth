@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Route, Routes } from "react-router-dom";
 
-function Header({email, onSignOut}) {
+const Header = ({ email, onSignOut }) => {
   return (
     <header className="header">
       <div className="logo" />
@@ -36,6 +36,6 @@ function Header({email, onSignOut}) {
       </Routes>
     </header>
   );
-}
+};
 
 export default Header;
